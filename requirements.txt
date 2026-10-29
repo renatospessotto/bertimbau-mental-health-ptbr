@@ -1,0 +1,24 @@
+# Executado no Google Colab com GPU T4. Versões não foram registradas na execução original.
+
+# Notebook 02: fine-tuning e avaliação
+torch
+transformers
+datasets
+accelerate
+pysentimiento
+scikit-learn
+scipy
+pandas
+matplotlib
+seaborn
+openpyxl
+emoji
+gdown
+tqdm
+
+# Notebook 01: coleta e sistema simbólico
+praw
+spacy
+symspellpy
+num2words
+nltk
