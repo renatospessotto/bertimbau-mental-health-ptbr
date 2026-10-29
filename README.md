@@ -2,18 +2,19 @@
 
 # Detecção de apoio em comentários de saúde mental com BERTimbau
 
-### BERTimbau ajustado num dataset próprio, anotado à mão, detecta apoio em comunidades de saúde mental com 50% mais F1 que os modelos prontos.
+### BERTimbau ajustado num dataset próprio, anotado à mão, detecta apoio em comunidades de saúde mental com quase 50% mais F1 que os modelos prontos.
 
 ![modelo BERTimbau](https://img.shields.io/badge/modelo-BERTimbau-2a78d6)
 ![técnicas TAPT · focal loss · ensemble](https://img.shields.io/badge/t%C3%A9cnicas-TAPT%20%C2%B7%20focal%20loss%20%C2%B7%20ensemble-eb6834)
 ![dados 2.995 comentários anotados](https://img.shields.io/badge/dados-2.995%20coment%C3%A1rios%20anotados-1baf7a)
+[![Hugging Face modelo publicado](https://img.shields.io/badge/Hugging%20Face-modelo%20publicado-eda100)](https://huggingface.co/RenatoSpessotto/bertimbau-apoio-saude-mental-ptbr)
 ![ICMC/USP PLN 2026](https://img.shields.io/badge/ICMC%2FUSP-PLN%202026-52514e)
 
 </div>
 
 *English summary at the end.*
 
-| **0,598** | **+0,20** | **2.995** | **0,105 → 0,041** |
+| **0,590** | **+0,19** | **2.995** | **0,087 → 0,037** |
 |:---:|:---:|:---:|:---:|
 | F1-macro do ensemble no teste humano | de F1 sobre o melhor modelo pronto (0,399) | comentários anotados pela equipe | erro de calibração (ECE) com temperature scaling |
 
@@ -31,15 +32,16 @@ O projeto cobre o pipeline inteiro: **coleta, anotação humana de um dataset pr
 
 | Modelo | Acurácia | **F1-macro** | F1-ponderado |
 |---|---|---|---|
-| BERTimbau, holdout | 0,620 | 0,574 | 0,634 |
-| BERTimbau, K-Fold (média ± dp) | 0,648 ± 0,019 | 0,578 ± 0,016 | 0,652 ± 0,013 |
-| **BERTimbau, ensemble final** | **0,667** | **0,598** | **0,671** |
+| BERTimbau, holdout | 0,647 | 0,594 | 0,658 |
+| BERTimbau, K-Fold (média ± dp na validação) | 0,643 ± 0,016 | 0,575 ± 0,018 | 0,647 ± 0,012 |
+| **BERTimbau, ensemble final** | **0,657** | **0,590** | **0,661** |
 | Pysentimiento (pronto, zero-shot) | 0,427 | 0,399 | 0,444 |
 | XLM-RoBERTa cardiffnlp (pronto, zero-shot) | 0,377 | 0,358 | 0,382 |
 
-- O modelo ajustado no domínio ganha **+0,20 de F1-macro** sobre o melhor modelo pronto.
-- F1 por classe: apoio 0,77, neutro 0,66, **não-apoio 0,36**. A classe minoritária (~12% dos dados) é a parte difícil.
-- **Calibração:** temperature scaling reduziu o erro de calibração (ECE) de 0,105 para 0,041.
+- O modelo ajustado no domínio ganha **+0,19 de F1-macro** sobre o melhor modelo pronto.
+- F1 por classe: apoio 0,76, neutro 0,65, **não-apoio 0,36**. A classe minoritária (~12% dos dados) é a parte difícil.
+- **Calibração:** temperature scaling reduziu o erro de calibração (ECE) de 0,087 para 0,037.
+- **Modelo publicado** no Hugging Face: [RenatoSpessotto/bertimbau-apoio-saude-mental-ptbr](https://huggingface.co/RenatoSpessotto/bertimbau-apoio-saude-mental-ptbr), com o modelo do holdout na raiz (`pipeline("text-classification")`) e o ensemble calibrado em `ensemble/`.
 
 ![Concordância entre modelos](figures/concordancia_heatmap.png)
 
@@ -85,4 +87,4 @@ Projeto em grupo de 6 integrantes na disciplina de Processamento de Linguagem Na
 ---
 
 ## English summary
-Classifies Brazilian Portuguese Reddit comments in mental-health communities as supportive, neutral or non-supportive, using a **dataset collected and annotated by the team** (2,995 comments). BERTimbau with task-adaptive pretraining, focal loss, a 5-fold ensemble and temperature scaling reaches **macro-F1 0.598 vs. 0.399** for the best off-the-shelf model (Pysentimiento), with calibration error reduced from 0.105 to 0.041. Not intended for automated moderation or clinical use.
+Classifies Brazilian Portuguese Reddit comments in mental-health communities as supportive, neutral or non-supportive, using a **dataset collected and annotated by the team** (2,995 comments). BERTimbau with task-adaptive pretraining, focal loss, a 5-fold ensemble and temperature scaling reaches **macro-F1 0.590 vs. 0.399** for the best off-the-shelf model (Pysentimiento), with calibration error reduced from 0.087 to 0.037. The model is published on Hugging Face ([RenatoSpessotto/bertimbau-apoio-saude-mental-ptbr](https://huggingface.co/RenatoSpessotto/bertimbau-apoio-saude-mental-ptbr)). Not intended for automated moderation or clinical use.
